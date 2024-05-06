@@ -4,6 +4,10 @@
 Indranil Guha| Iguha4@illinois.edu  
 Snehangshu Bhattacharjee | sb8@illinois.edu
 
+https://github.com/bsnehangshu/DescEmb/blob/master/test.txt
+
+
+
 
 # Introduction
 The paper can be found in this link: https://arxiv.org/abs/2108.03625
