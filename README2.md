@@ -68,10 +68,11 @@ We can see how value embedding is impacting the performance of a predictive task
 All required packages and libraries are present in the python 3 default colab runtime excpet below.
 Refer to envioronment.yml file for more details about the requirement.
 
-## Check and Install dependencies
+### Check and Install dependencies
+```shell script
 !pip install iterative-stratification
-
-## Source Code Setup
+```
+### Source Code Setup
 
 Existing code in the GitHub repo referenced in the paper will be used to run experiments on proposed hypothesis. https://github.com/hoon9405/DescEmb
 
@@ -90,12 +91,13 @@ from google.colab import drive
 drive.mount('/content/drive')
 ## Data
 
-
 ### DATA Download Instruction
 
 ***Download the datasets from the MIMIC III Demo database for this experiment, the demo database is used to run this experirment as part of this project submission. Only MIMIC III Dataset is used for the scope of this project***
 
-Johnson, A., Pollard, T., & Mark, R. (2019). MIMIC-III Clinical Database Demo (version 1.4). PhysioNet. https://doi.org/10.13026/C2HM2Q
+    Johnson, A., Pollard, T., & Mark, R. (2019). MIMIC-III Clinical Database Demo (version 1.4). PhysioNet. https://doi.org/10.13026/C2HM2Q.
+
+
 
 
 ***Note:***
@@ -106,11 +108,11 @@ Full Datasets can be downloaded from MIMIC III and eICU, filenames and data stat
 
 **MIMIC III**
 
-Johnson, A., Pollard, T., & Mark, R. (2016). MIMIC-III Clinical Database (version 1.4). PhysioNet. https://doi.org/10.13026/C2XW26.
+    Johnson, A., Pollard, T., & Mark, R. (2016). MIMIC-III Clinical Database (version 1.4). PhysioNet. https://doi.org/10.13026/C2XW26.
 
 **eICU**
 
-Pollard, T., Johnson, A., Raffa, J., Celi, L. A., Badawi, O., & Mark, R. (2019). eICU Collaborative Research Database (version 2.0). PhysioNet. https://doi.org/10.13026/C2WM1R
+    Pollard, T., Johnson, A., Raffa, J., Celi, L. A., Badawi, O., & Mark, R. (2019). eICU Collaborative Research Database (version 2.0). PhysioNet. https://doi.org/10.13026/C2WM1R
 
 
     ```
@@ -150,31 +152,28 @@ Pollard, T., Johnson, A., Raffa, J., Celi, L. A., Badawi, O., & Mark, R. (2019).
 
 ## Hypothesis#1 : Pretraining from Scratch
 
-
 ### Data Preprocessing Code and Command
 
-# First change the directory to preprocess folder
+#### First change the directory to preprocess folder
 ```shell script
 %cd /content/drive/MyDrive/Project/DescEmb/preprocess/ 
 ```
 
-# Install necessary utility files
+#### Install necessary utility files
+```shell script
 !python preprocess_utils.py
-## use --data_type pretrain for Hypothesis #1
 !python preprocess_main.py --src_data mimiciii --dataset_path /content/drive/MyDrive/Project/DescEmb/data_input_path/mimic --dest_path /content/drive/MyDrive/Project/DescEmb/data_output_path --data_type pretrain --target_task mortality
-
+```
 
 ### Model
 Author of this paper used two model architecture for text encoder Bi-RNN and BERT. Here we will pretrain the text encoder using Bi-RNN architecture on MIMIC III Database using MLM for the DescEmb model. Value encoding is set to 'NV' as it does not applicable for pretraining. For CodeEmb text encoder, standrad Word2Vec is used.
 
-
 ### Training
-
 ***Hyperparams***
 
 * lr is set to 0.001, we tried to run the pretraining with smaller lr 0.0001 but the pretraining time gets increased significanlty and we didn't observe any meaningful impromevement, so we kept the lr as .001 for this script.
 
-* n_epochs set to 50, at this epoch model is still not converging but we kept it at 50 for reasonable runtime. Results with n_epoch = 500 is shown below for reference.
+* n_epochs set to 50, at this epoch model is still not converging but we kept it at 50 for reasonable runtime. 
 
 * Other model parameters are set to default, refer to
 main.py for more details about deafult params setting.
@@ -185,15 +184,15 @@ main.py for more details about deafult params setting.
    * --enc_hidden_dim : 256
    * --mlm_prob : 0.3
 
-
+```shell script
 %cd /content/drive/MyDrive/Project/DescEmb/
+```
+
 **Pre-train a DescEmb model with Masked Language Modeling (MLM)**
+
+```shell script
 !python main.py --distributed_world_size 1 --input_path /content/drive/MyDrive/Project/DescEmb/data_output_path --model descemb_rnn --src_data mimiciii --ratio 100 --n_epochs 50 --lr .001 --value_mode NV --task mlm
-# input_path must be preproces destination path
-# n_epochs 50
-!python main.py --distributed_world_size 1 --input_path /content/drive/MyDrive/Project/DescEmb/data_output_path --model descemb_rnn --src_data mimiciii --ratio 100 --n_epochs 500 --lr .001 --value_mode NV --task mlm
-# input_path must be preproces destination path
-# n_epochs 500
+
 **Pre-train a CodeEmb model with Word2Vec**
 #!python main.py --distributed_world_size 1 --input_path /content/drive/MyDrive/Project/DescEmb/data_output_path/mlm --model codeemb --src_data mimiciii --ratio 100 --n_epochs 50 --task w2v
 # input_path must be preproces destination path
