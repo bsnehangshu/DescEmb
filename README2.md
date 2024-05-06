@@ -65,9 +65,10 @@ We can see how value embedding is impacting the performance of a predictive task
  Due to limitation of computing resource required to complete preprocessing and model traning we could not run this experiment with full MIMIC III database, instead we used the MIMIC III demo database for this experiment. Due to less number of sample data for training, we observed the model is overfitting which is undertstandable but we could still make some meaningful observation about the validatity in the claim made by the authors of the paper.
 
 ## Environment Setup
-All required packages and libraries are present in the python 3 default colab runtime excpet below , run the code cell to install this. Refer to envioronment.yml file for more details about the requirement.
+All required packages and libraries are present in the python 3 default colab runtime excpet below.
+Refer to envioronment.yml file for more details about the requirement.
 
-# Check and Install dependencies
+## Check and Install dependencies
 !pip install iterative-stratification
 
 ## Source Code Setup
@@ -112,6 +113,7 @@ Johnson, A., Pollard, T., & Mark, R. (2016). MIMIC-III Clinical Database (versio
 Pollard, T., Johnson, A., Raffa, J., Celi, L. A., Badawi, O., & Mark, R. (2019). eICU Collaborative Research Database (version 2.0). PhysioNet. https://doi.org/10.13026/C2WM1R
 
 
+    ```
     data_input_path
     ├─ mimic
     │  ├─ ADMISSIONS.csv
@@ -152,7 +154,10 @@ Pollard, T., Johnson, A., Raffa, J., Celi, L. A., Badawi, O., & Mark, R. (2019).
 ### Data Preprocessing Code and Command
 
 # First change the directory to preprocess folder
-%cd /content/drive/MyDrive/Project/DescEmb/preprocess/
+```shell script
+%cd /content/drive/MyDrive/Project/DescEmb/preprocess/ 
+```
+
 # Install necessary utility files
 !python preprocess_utils.py
 ## use --data_type pretrain for Hypothesis #1
